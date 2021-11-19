@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:screen_split/controllers/main_controller.dart';
 import 'package:screen_split/controllers/toolbar_controller.dart';
 import 'package:screen_split/pages/screenshot_page.dart';
+import 'package:screen_split/widgets/custom_snackbar.dart';
 import '../widgets/split_screen.dart';
 import 'package:screen_split/widgets/toolbar.dart';
 import 'dart:typed_data';
@@ -38,22 +39,29 @@ class _MainPageState extends State<MainPage> {
       return Scaffold(
         backgroundColor: Color(0xff383838),
         body: SafeArea(
-          child: Stack(
+          child: Obx(() => Stack(
+            alignment: Alignment.center,
             children: [
               Screenshot(
                 controller: screenshotController,
                 child: _showScreens()
               ),
-              Positioned(
-                bottom: 0,
-                child: Toolbar(
-                  onScreenShot: takeScreenShot,
-                  onSwapScreens: swapScreens,
-                  addToFavorites: (){},
+              if (mainController.isSnackBarShowed.value)
+                Positioned(
+                  bottom: 100.h,
+                  child: CustomSnackbar()
                 ),
-              ),
+              if (!mainController.isTapFavorite.value && !mainController.isAddToFavorite.value)
+                Positioned(
+                  bottom: 0,
+                  child: Toolbar(
+                    onScreenShot: takeScreenShot,
+                    onSwapScreens: swapScreens,
+                    addToFavorites: (){},
+                  ),
+                ),
             ],
-          ),
+          ),)
         ),
         // bottomNavigationBar: Toolbar(
         //   onScreenShot: (){},

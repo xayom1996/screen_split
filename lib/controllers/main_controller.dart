@@ -1,10 +1,18 @@
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class MainController extends GetxController{
   RxBool isCapture = false.obs;
+  RxBool isTapFavorite = false.obs;
+  RxBool isAddToFavorite = false.obs;
+  RxBool isSnackBarShowed = false.obs;
+  RxString snackBarTitle = ''.obs;
+  RxString choosingUrl = ''.obs;
   Map<int, InAppWebViewController?>? webViews = {};
   Map<int, Uint8List?>? screenshotBytes = {};
   Map<int, RxString> urls = {
@@ -57,7 +65,10 @@ class MainController extends GetxController{
     activeScreen(activeScreen.value == 1 ? 2 : 1);
   }
 
-  void changeUrl(int id, String url){
+  void changeUrl(int id, String url) async{
+    if (urls[id]!.value != '') {
+      await webViews![id]!.loadUrl(urlRequest: URLRequest(url: Uri.parse(url)));
+    }
     urls[id]!.value = url;
     activeScreen(id);
   }
@@ -83,6 +94,31 @@ class MainController extends GetxController{
       }
     } catch(e){
       print(e);
+    }
+  }
+
+  void addToFavorites(int id) async {
+    isSnackBarShowed(true);
+    snackBarTitle('Added to favorites');
+    Future.delayed(const Duration(milliseconds: 2500), () {
+      isSnackBarShowed(false);
+      snackBarTitle('');
+    });
+  }
+
+  void saveScreenshot(Uint8List img) async {
+    try {
+      String screenshotName = 'screenshot_${DateTime.now().millisecondsSinceEpoch}';
+      await ImageGallerySaver.saveImage(img, quality: 60, name: screenshotName);
+      snackBarTitle('Screenshot saved in your gallery');
+    } catch(e){
+      snackBarTitle('Something went wrong');
+    } finally{
+      isSnackBarShowed(true);
+      Future.delayed(const Duration(milliseconds: 2500), () {
+        isSnackBarShowed(false);
+        snackBarTitle('');
+      });
     }
   }
 

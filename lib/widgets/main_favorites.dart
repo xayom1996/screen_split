@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:screen_split/controllers/main_controller.dart';
 import 'package:screen_split/controllers/toolbar_controller.dart';
+import 'package:screen_split/pages/favorites.dart';
+import 'package:screen_split/theme/text_theme.dart';
 
 class MainFavorites extends StatelessWidget{
   final int id;
@@ -15,19 +18,39 @@ class MainFavorites extends StatelessWidget{
   Widget _generateItem(double width, double height, String url) {
     return InkWell(
       onTap: (){
-        mainController.changeUrl(id, 'https://$url.com');
         toolbarController.changeStatus(false);
+        if (url == 'all') {
+          Get.to(Favorites());
+        } else
+          mainController.changeUrl(id, 'https://$url.com');
       },
       child: Container(
         width: width,
         height: height,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.blueAccent),
-          color: Colors.pink,
-        ),
-        child: Center(
-          child: Text(url, style: TextStyle(color: Colors.white)),
-        ),
+        decoration: url == 'all'
+            ? BoxDecoration(
+                color: Color(0xff383838),
+                borderRadius: BorderRadius.all(Radius.circular(8.sp))
+              )
+            : null,
+        child: url != 'all'
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SvgPicture.asset(
+                    'assets/logos/$url.svg',
+                    // color: Color(0xffBDBDBD),
+                    height: 40.h,
+                    width: 40.w,
+                  ),
+                  Center(
+                    child: Text(url[0].toUpperCase() + url.substring(1), style: font12),
+                  ),
+                ],
+              )
+            : Center(
+                child: Text('Show all favorites', textAlign: TextAlign.center, style: font12),
+              )
       ),
     );
   }
@@ -59,6 +82,7 @@ class MainFavorites extends StatelessWidget{
       padding: EdgeInsets.only(left: 16.w, top: 36.h, right: 16.h),
       color: const Color(0xff252525),
       width: 1.sw,
+      height: 1.sh,
       child: Wrap(
         runSpacing: 14.h,
         spacing: 16.w,

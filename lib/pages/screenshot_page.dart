@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:screen_split/controllers/main_controller.dart';
+import 'package:screen_split/theme/text_theme.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ScreenShot extends StatefulWidget{
   final Uint8List? screenshotImage;
@@ -15,6 +19,7 @@ class ScreenShot extends StatefulWidget{
 
 class _ScreenShotState extends State<ScreenShot> {
   final _controller = CropController();
+  final MainController mainController = Get.find(tag: 'main');
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,8 @@ class _ScreenShotState extends State<ScreenShot> {
               aspectRatio: 4 / 3,
               // initialSize: 0.5,
               onCropped: (image) {
-                print(image);
+                mainController.saveScreenshot(image);
+                Get.back();
               },
               // cornerDotBuilder: (size, edgeAlignment) => const DotControl(color: Colors.blue),
             ),
@@ -43,7 +49,12 @@ class _ScreenShotState extends State<ScreenShot> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Cancel'),
+                  child: Text('Cancel',
+                      style: font14.copyWith(
+                        color: Color(0xff383838),
+                        fontSize: 24.sp,
+                      )
+                  ),
                 )
             ),
             Positioned(
@@ -54,10 +65,40 @@ class _ScreenShotState extends State<ScreenShot> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.sp),
                   ),
-                  onPressed: () {
-                    _controller.crop();
+                  onPressed: () async {
+                    var status = await Permission.storage.status;
+                    if (status.isGranted){
+                      _controller.crop();
+                    } else{
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => CupertinoAlertDialog(
+                            title: Text('Allow this app to access photos and videos?'),
+                            content: Text(
+                                'This devile will be able to access photos and videos while it is connected to your iPhone'),
+                            actions: <Widget>[
+                              CupertinoDialogAction(
+                                  child: Text('Allow'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    openAppSettings();
+                                  }
+                              ),
+                              CupertinoDialogAction(
+                                child: Text("Don't Allow"),
+                                onPressed: () => Navigator.of(context).pop(),
+                              ),
+                            ],
+                          ));
+                    }
                   },
-                  child: Text('Save'),
+                  child: Text(
+                      'Save',
+                      style: font14.copyWith(
+                        color: Color(0xff383838),
+                        fontSize: 24.sp,
+                      )
+                  ),
                 )
             ),
           ],
