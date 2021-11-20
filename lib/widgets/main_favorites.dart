@@ -78,16 +78,68 @@ class MainFavorites extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 16.w, top: 36.h, right: 16.h),
-      color: const Color(0xff252525),
-      width: 1.sw,
-      height: 1.sh,
-      child: Wrap(
-        runSpacing: 14.h,
-        spacing: 16.w,
-        alignment: WrapAlignment.spaceAround,
-        children: _generateChildren(8)
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).requestFocus(FocusNode());
+        toolbarController.isOpen(false);
+      },
+      child: Container(
+        padding: EdgeInsets.only(left: 16.w, top: 36.h, right: 16.h),
+        color: const Color(0xff252525),
+        width: 1.sw,
+        height: 1.sh,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              onTap: (){
+                toolbarController.isOpen(false);
+              },
+              style: font14.copyWith(
+                fontSize: 18.sp,
+                color: Color(0xffEBEBF5).withOpacity(0.6),
+              ),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Color(0xffA3A3A7).withOpacity(0.24),
+                border: new OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(15.sp) //                 <--- border radius here
+                  ),
+                ),
+                focusedBorder: new OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(15.sp) //                 <--- border radius here
+                  ),
+                ),
+                prefixIcon: IconButton(
+                  icon: Icon(
+                    Icons.search,
+                    size: 20.sp,
+                    color: Color(0xffEBEBF5).withOpacity(0.6),
+                  ), onPressed: () {  },
+                ),
+                contentPadding: EdgeInsets.only(right: 10.w),
+                hintText: 'Search',
+                hintStyle: font14.copyWith(
+                  fontSize: 18.sp,
+                  color: Color(0xffEBEBF5).withOpacity(0.6),
+                )
+              ),
+            ),
+            SizedBox(
+              height: 25.h,
+            ),
+            Expanded(
+              child: Wrap(
+                  runSpacing: 14.h,
+                  spacing: 14.w,
+                // alignment: WrapAlignment.spaceAround,
+                  children: _generateChildren(8)
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

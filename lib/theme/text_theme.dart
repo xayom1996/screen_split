@@ -37,3 +37,10 @@ var font32 = TextStyle(
     fontWeight: FontWeight.w700,
     color: Color(0xffFFFFFF)
 );
+
+var font40 = TextStyle(
+    fontFamily: 'Manrope',
+    fontSize: 40.sp,
+    fontWeight: FontWeight.w800,
+    color: Color(0xffFFFFFF)
+);

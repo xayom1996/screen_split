@@ -28,10 +28,9 @@ class _ScreenShotState extends State<ScreenShot> {
         child: Stack(
           children: [
             Crop(
+              initialSize: 0.7,
               image: widget.screenshotImage!,
               controller: _controller,
-              aspectRatio: 4 / 3,
-              // initialSize: 0.5,
               onCropped: (image) {
                 mainController.saveScreenshot(image);
                 Get.back();

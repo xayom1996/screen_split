@@ -17,7 +17,7 @@ class CustomSnackbar extends StatelessWidget{
         borderRadius: BorderRadius.all(Radius.circular(8.sp))
       ),
       child: Center(
-        child: Text(mainController.snackBarTitle.value, style: font14,),
+        child: Text(mainController.snackBarTitle.value, style: font16,),
       ),
     );
   }

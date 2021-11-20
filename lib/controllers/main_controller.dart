@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
@@ -11,10 +12,13 @@ class MainController extends GetxController{
   RxBool isTapFavorite = false.obs;
   RxBool isAddToFavorite = false.obs;
   RxBool isSnackBarShowed = false.obs;
+  RxBool isOpenMenu = false.obs;
   RxString snackBarTitle = ''.obs;
   RxString choosingUrl = ''.obs;
   Map<int, InAppWebViewController?>? webViews = {};
   Map<int, Uint8List?>? screenshotBytes = {};
+  RxDouble firstScreenSize = 360.h.obs;
+
   Map<int, RxString> urls = {
     1: ''.obs,
     2: ''.obs,
@@ -108,7 +112,7 @@ class MainController extends GetxController{
 
   void saveScreenshot(Uint8List img) async {
     try {
-      String screenshotName = 'screenshot_${DateTime.now().millisecondsSinceEpoch}';
+      String screenshotName = 'screenshot_${DateTime.now().millisecondsSinceEpoch}.png';
       await ImageGallerySaver.saveImage(img, quality: 60, name: screenshotName);
       snackBarTitle('Screenshot saved in your gallery');
     } catch(e){

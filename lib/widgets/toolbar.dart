@@ -7,98 +7,15 @@ import 'package:get/get.dart';
 import 'package:screen_split/controllers/main_controller.dart';
 import 'package:screen_split/controllers/toolbar_controller.dart';
 import 'package:screen_split/pages/favorites.dart';
+import 'package:screen_split/pages/settings_page.dart';
 import 'package:screen_split/theme/text_theme.dart';
 import 'package:screen_split/widgets/menu.dart';
 
 class Toolbar extends StatelessWidget{
-  final Function onSwapScreens;
-  final Function onScreenShot;
-  final Function addToFavorites;
-  Toolbar({Key? key, required this.onSwapScreens, required this.onScreenShot,
-    required this.addToFavorites}) : super(key: key);
+  Toolbar({Key? key}) : super(key: key);
 
   final MainController mainController = Get.find(tag: 'main');
   final ToolbarController toolbarController = Get.find(tag: 'toolbar');
-
-  void _showMenu(BuildContext ctx) {
-    toolbarController.isOpenMenu(true);
-
-    showCupertinoModalPopup<void>(
-        context: ctx,
-        builder: (BuildContext context) => Align(
-          alignment: Alignment.center,
-          child: CupertinoActionSheet(
-            actions: <Widget>[
-              Container(
-                color: const Color(0xff383838).withOpacity(0.9),
-                child: CupertinoActionSheetAction(
-                  child: Text('Add to favorites', style: font16),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    if (mainController.urls[1]!.value != '' || mainController.urls[2]!.value != '') {
-                      mainController.isAddToFavorite(true);
-                    }
-                  },
-                ),
-              ),
-              Container(
-                color: const Color(0xff383838).withOpacity(0.9),
-                child: CupertinoActionSheetAction(
-                  child: Text('Open favorites', style: font16),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Get.to(Favorites());
-                  },
-                ),
-              ),
-              Container(
-                color: const Color(0xff383838).withOpacity(0.9),
-                child: CupertinoActionSheetAction(
-                  child: Text('Take a screenshot', style: font16),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    onScreenShot();
-                  },
-                ),
-              ),
-              Container(
-                color: const Color(0xff383838).withOpacity(0.9),
-                child: CupertinoActionSheetAction(
-                  child: Text('Swap screens', style: font16),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    onSwapScreens();
-                  },
-                ),
-              ),
-              // SizedBox(
-              //   height: 12.h,
-              // ),
-              // Container(
-              //   color: const Color(0xff383838).withOpacity(0.9),
-              //   child: CupertinoActionSheetAction(
-              //     child: Text('Cancel', style: TextStyle(color: Colors.green),),
-              //     onPressed: () {
-              //       Navigator.pop(context);
-              //     },
-              //   ),
-              // ),
-            ],
-            cancelButton: Container(
-              color: const Color(0xff383838).withOpacity(0.9),
-              child: CupertinoActionSheetAction(
-                child: Text('Cancel', style: font16.copyWith(color: Color(0xff39F06D)),),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ),
-        )
-    ).then((value) {
-      toolbarController.isOpenMenu(false);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,6 +83,7 @@ class Toolbar extends StatelessWidget{
                     children: [
                       InkWell(
                         onTap: () {
+                          Get.to(SettingsPage());
                         },
                         child: SvgPicture.asset(
                           'assets/icons/settings.svg',
@@ -192,12 +110,13 @@ class Toolbar extends StatelessWidget{
                       ),
                       InkWell(
                         onTap: () {
-                          _showMenu(context);
+                          // _showMenu(context);
+                          mainController.isOpenMenu(true);
                         },
                         child: SvgPicture.asset(
                           'assets/icons/menu.svg',
                           height: 32.h,
-                          color: toolbarController.isOpenMenu.value
+                          color: mainController.isOpenMenu.value
                               ? Color(0xff39F06D)
                               : Colors.grey,
                         ),

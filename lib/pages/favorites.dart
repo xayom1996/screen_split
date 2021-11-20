@@ -113,7 +113,7 @@ class Favorites extends StatelessWidget {
               ),
               Wrap(
                   runSpacing: 14.h,
-                  spacing: 16.w,
+                  spacing: 14.w,
                   children: _generateChildren(35)
               ),
             ],

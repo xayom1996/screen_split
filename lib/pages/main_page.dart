@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:screen_split/controllers/main_controller.dart';
 import 'package:screen_split/controllers/toolbar_controller.dart';
 import 'package:screen_split/pages/screenshot_page.dart';
+import 'package:screen_split/widgets/custom_dialog.dart';
 import 'package:screen_split/widgets/custom_snackbar.dart';
 import '../widgets/split_screen.dart';
 import 'package:screen_split/widgets/toolbar.dart';
@@ -51,14 +54,18 @@ class _MainPageState extends State<MainPage> {
                   bottom: 100.h,
                   child: CustomSnackbar()
                 ),
-              if (!mainController.isTapFavorite.value && !mainController.isAddToFavorite.value)
+              if (mainController.isOpenMenu.value)
+                Positioned(
+                    bottom: 74.h,
+                    child: CustomDialog(
+                      onScreenShot: takeScreenShot,
+                      onSwapScreens: swapScreens,
+                    )
+                ),
+              if (!mainController.isTapFavorite.value && !mainController.isAddToFavorite.value && !mainController.isOpenMenu.value)
                 Positioned(
                   bottom: 0,
-                  child: Toolbar(
-                    onScreenShot: takeScreenShot,
-                    onSwapScreens: swapScreens,
-                    addToFavorites: (){},
-                  ),
+                  child: Toolbar(),
                 ),
             ],
           ),)
@@ -77,19 +84,29 @@ class _MainPageState extends State<MainPage> {
       child: Column(
         children: [
           SizedBox(
-            height: 360.h,
+            height: MediaQuery.of(context).viewInsets.bottom != 0
+                ? max(300.h, mainController.firstScreenSize.value - MediaQuery.of(context).viewInsets.bottom)
+                : mainController.firstScreenSize.value,
             child: SplitScreen(id: 1),
           ),
           SizedBox(height: 4.h),
-          Container(
-            height: 4.h,
-            width: 80.w,
-            child: RaisedButton(
-                color: Colors.white,
-                onPressed: (){},
-                shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(2.0)
-                )
+          GestureDetector(
+            onPanUpdate: (details){
+              double mousePosition = details.globalPosition.dy - 60.h;
+              if (mousePosition >= 200.h && 1.sh - mousePosition >= 300.h) {
+                mainController.firstScreenSize(mousePosition);
+              }
+            },
+            child: Container(
+              height: 5.h,
+              width: 80.w,
+              child: RaisedButton(
+                  color: Colors.white,
+                  onPressed: (){},
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(2.0)
+                  )
+              ),
             ),
           ),
           SizedBox(height: 4.h),
