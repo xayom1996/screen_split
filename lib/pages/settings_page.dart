@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:screen_split/pages/change_password.dart';
 import 'package:screen_split/theme/text_theme.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -34,23 +35,28 @@ class SettingsPage extends StatelessWidget {
         padding: EdgeInsets.only(left: 16.sp, right: 16.sp, top: 30.sp),
         child: Column(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15.sp)),
-                color: const Color(0xff383838).withOpacity(0.9),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 18.sp),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Change password', style: font16),
-                    SvgPicture.asset(
-                      'assets/icons/chevron_right.svg',
-                      width: 8.w,
-                      color: Color(0xffE7E7E7),
-                    ),
-                  ],
+            InkWell(
+              onTap: (){
+                Get.to(ChangePasswordPage());
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15.sp)),
+                  color: const Color(0xff383838).withOpacity(0.9),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 18.sp),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Change password', style: font16),
+                      SvgPicture.asset(
+                        'assets/icons/chevron_right.svg',
+                        width: 8.w,
+                        color: Color(0xffE7E7E7),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

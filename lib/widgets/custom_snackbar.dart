@@ -11,7 +11,6 @@ class CustomSnackbar extends StatelessWidget{
 
     return Container(
       padding: EdgeInsets.all(10.sp),
-      height: 40.h,
       decoration: BoxDecoration(
         color: const Color(0xff383838).withOpacity(0.9),
         borderRadius: BorderRadius.all(Radius.circular(8.sp))

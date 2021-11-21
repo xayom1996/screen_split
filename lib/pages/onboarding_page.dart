@@ -53,94 +53,92 @@ class OnBoardingPage extends StatelessWidget {
                 child: Column(
                     children: [
                       Expanded(
-                        child: Column(
-                          children: [
-                            Expanded(
-                              flex: 4,
-                              child: Container(
-                                  alignment: Alignment.center,
-                                  child: PageView(
-                                    physics: BouncingScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    controller: _controller,
-                                    onPageChanged: (value) {
-                                      _currentIndex(value);
-                                    },
-                                    children: explanationPages,
-                                  )
-                              ),
-                            ),
-                            SizedBox(
-                              height: 40.h,
-                            ),
-                            // Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                                // Spacer(),
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: EdgeInsets.symmetric(horizontal: 56.sp),
-                                  child: RaisedButton(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.sp),
-                                    ),
-                                    padding: EdgeInsets.all(16.sp),
-                                    onPressed: (){
-                                      _controller.nextPage(
-                                          duration: Duration(milliseconds: 200),
-                                          curve: Curves.easeInOut
-                                      );
-                                    },
-                                    color: Color(0xff00FF66),
-                                    child: Text(
-                                      'Continue',
-                                      style: font28.copyWith(
-                                        fontSize: 20.sp,
-                                        color: Colors.black
-                                      )
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 25.h,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(
-                                      'Terms of Use',
-                                      textAlign: TextAlign.center,
-                                      style: font14.copyWith(
-                                        decoration: TextDecoration.underline,
-                                      )
-                                    ),
-                                    Text(
-                                      'Restore',
-                                      textAlign: TextAlign.center,
-                                      style: font14.copyWith(
-                                        decoration: TextDecoration.underline,
-                                      )
-                                    ),
-                                    Text(
-                                      'Privacy policy',
-                                      textAlign: TextAlign.center,
-                                      style: font14.copyWith(
-                                        decoration: TextDecoration.underline,
-                                      )
+                        child: Container(
+                          child: Column(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 4,
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    child: PageView(
+                                      physics: BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      controller: _controller,
+                                      onPageChanged: (value) {
+                                        _currentIndex(value);
+                                      },
+                                      children: explanationPages,
                                     )
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Spacer(),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      padding: EdgeInsets.symmetric(horizontal: 56.sp),
+                                      child: RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(18.sp),
+                                        ),
+                                        padding: EdgeInsets.all(16.sp),
+                                        onPressed: (){
+                                          _controller.nextPage(
+                                              duration: Duration(milliseconds: 200),
+                                              curve: Curves.easeInOut
+                                          );
+                                        },
+                                        color: Color(0xff00FF66),
+                                        child: Text(
+                                          'Continue',
+                                          style: font28.copyWith(
+                                            fontSize: 20.sp,
+                                            color: Colors.black
+                                          )
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 25.h,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text(
+                                          'Terms of Use',
+                                          textAlign: TextAlign.center,
+                                          style: font14.copyWith(
+                                            decoration: TextDecoration.underline,
+                                          )
+                                        ),
+                                        Text(
+                                          'Restore',
+                                          textAlign: TextAlign.center,
+                                          style: font14.copyWith(
+                                            decoration: TextDecoration.underline,
+                                          )
+                                        ),
+                                        Text(
+                                          'Privacy policy',
+                                          textAlign: TextAlign.center,
+                                          style: font14.copyWith(
+                                            decoration: TextDecoration.underline,
+                                          )
+                                        )
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    // SizedBox(
+                                    //   height: 16.sp,
+                                    // ),
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 56.h,
-                                ),
-                              ],
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     ]),
@@ -211,7 +209,7 @@ class ExplanationPage extends StatelessWidget{
                       img,
                       alignment: Alignment.center,
                       // height: localImages.length == 1 ? 252.h : 128.h,
-                      width: 343.w,
+                      width: 343.sp,
                     ),
                   ),
                   SizedBox(height: 8.h),

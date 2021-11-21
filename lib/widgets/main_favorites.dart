@@ -131,12 +131,17 @@ class MainFavorites extends StatelessWidget{
               height: 25.h,
             ),
             Expanded(
-              child: Wrap(
-                  runSpacing: 14.h,
-                  spacing: 14.w,
-                // alignment: WrapAlignment.spaceAround,
-                  children: _generateChildren(8)
+              child: SingleChildScrollView(
+                child: Wrap(
+                    runSpacing: 14.w,
+                    spacing: 14.h,
+                    // alignment: WrapAlignment.spaceAround,
+                    children: _generateChildren(8)
+                ),
               ),
+            ),
+            SizedBox(
+              height: 30.h,
             ),
           ],
         ),

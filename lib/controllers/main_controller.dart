@@ -18,6 +18,8 @@ class MainController extends GetxController{
   Map<int, InAppWebViewController?>? webViews = {};
   Map<int, Uint8List?>? screenshotBytes = {};
   RxDouble firstScreenSize = 360.h.obs;
+  RxBool isPortrait = true.obs;
+
 
   Map<int, RxString> urls = {
     1: ''.obs,
@@ -124,6 +126,26 @@ class MainController extends GetxController{
         snackBarTitle('');
       });
     }
+  }
+
+  double height(double height) {
+    print(1.sw);
+    print(1.sh);
+    print(40.w);
+    print(40.h);
+    // I/flutter ( 5705): 392.72727272727275
+    // I/flutter ( 5705): 781.0909090909091
+    // I/flutter ( 5705): 41.89090909090909
+    // I/flutter ( 5705): 38.47738468428124
+    // I/flutter ( 5705): 718.9090909090909
+    // I/flutter ( 5705): 392.72727272727275
+    // I/flutter ( 5705): 76.68363636363635
+    // I/flutter ( 5705): 19.346171070309
+    return isPortrait.value ? height.h : height.w;
+  }
+
+  double width(double width) {
+    return isPortrait.value ? width.w : width.h;
   }
 
 }
