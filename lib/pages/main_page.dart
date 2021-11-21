@@ -51,7 +51,7 @@ class _MainPageState extends State<MainPage> {
                     if (mainController.isSnackBarShowed.value)
                       Positioned(
                           bottom: 100.h,
-                          child: CustomSnackbar()
+                          child: CustomSnackbar(title: mainController.snackBarTitle.value)
                       ),
                     if (mainController.isOpenMenu.value)
                       Positioned(

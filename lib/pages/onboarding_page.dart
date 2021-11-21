@@ -6,7 +6,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:screen_split/controllers/password_controller.dart';
 import 'package:screen_split/pages/main_page.dart';
+import 'package:screen_split/pages/pick_password_page.dart';
+import 'package:screen_split/pages/type_password.dart';
 import 'package:screen_split/theme/text_theme.dart';
 
 class OnBoardingPage extends StatelessWidget {
@@ -179,10 +182,14 @@ class ExplanationPage extends StatelessWidget{
             left: 8.sp,
             child: IconButton(
               onPressed: (){
+                PasswordController passwordController = Get.find(tag: 'password');
+
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MainPage(),
+                    builder: (context) => passwordController.password.value == ''
+                        ? PickPasswordPage()
+                        : TypePasswordPage(),
                   ),
                       (route) => false,
                 );

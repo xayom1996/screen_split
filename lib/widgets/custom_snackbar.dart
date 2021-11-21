@@ -5,10 +5,12 @@ import 'package:screen_split/controllers/main_controller.dart';
 import 'package:screen_split/theme/text_theme.dart';
 
 class CustomSnackbar extends StatelessWidget{
+  final String title;
+
+  const CustomSnackbar({Key? key, required this.title}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final MainController mainController = Get.find(tag: 'main');
-
     return Container(
       padding: EdgeInsets.all(10.sp),
       decoration: BoxDecoration(
@@ -16,7 +18,7 @@ class CustomSnackbar extends StatelessWidget{
         borderRadius: BorderRadius.all(Radius.circular(8.sp))
       ),
       child: Center(
-        child: Text(mainController.snackBarTitle.value, style: font16,),
+        child: Text(title, style: font16,),
       ),
     );
   }
