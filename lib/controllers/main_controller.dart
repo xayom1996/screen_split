@@ -6,6 +6,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:screen_split/controllers/favorites_controller.dart';
 
 class MainController extends GetxController{
   RxBool isCapture = false.obs;
@@ -104,6 +105,10 @@ class MainController extends GetxController{
   }
 
   void addToFavorites(int id) async {
+    final FavoritesController favoritesController = Get.find(tag: 'favorites');
+    Uri? getUrl = await webViews![id]!.getUrl();
+    favoritesController.addFavorite(getUrl.toString());
+
     isSnackBarShowed(true);
     snackBarTitle('Added to favorites');
     Future.delayed(const Duration(milliseconds: 2500), () {
@@ -126,26 +131,6 @@ class MainController extends GetxController{
         snackBarTitle('');
       });
     }
-  }
-
-  double height(double height) {
-    print(1.sw);
-    print(1.sh);
-    print(40.w);
-    print(40.h);
-    // I/flutter ( 5705): 392.72727272727275
-    // I/flutter ( 5705): 781.0909090909091
-    // I/flutter ( 5705): 41.89090909090909
-    // I/flutter ( 5705): 38.47738468428124
-    // I/flutter ( 5705): 718.9090909090909
-    // I/flutter ( 5705): 392.72727272727275
-    // I/flutter ( 5705): 76.68363636363635
-    // I/flutter ( 5705): 19.346171070309
-    return isPortrait.value ? height.h : height.w;
-  }
-
-  double width(double width) {
-    return isPortrait.value ? width.w : width.h;
   }
 
 }

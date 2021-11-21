@@ -13,7 +13,7 @@ class PasswordController extends GetxController{
   }
 
   void getPasswordFromBox() async{
-    var box = await Hive.openBox('myBox');
+    var box = await Hive.openBox('passwordBox');
     var _password = box.get('password');
     if (_password != null) {
       password(_password);
@@ -22,7 +22,7 @@ class PasswordController extends GetxController{
 
   void changePassword(String newPassword) async{
     password(newPassword);
-    var box = await Hive.openBox('myBox');
+    var box = await Hive.openBox('passwordBox');
     box.put('password', newPassword);
   }
 

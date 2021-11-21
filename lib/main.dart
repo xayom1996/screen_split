@@ -18,16 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
-      builder: () => GestureDetector(
-        onTap: (){
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "Split Screen",
-          initialBinding: MainBinding(),
-          home: SplashPage(),
-        ),
+      builder: () => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "Split Screen",
+        initialBinding: MainBinding(),
+        home: SplashPage(),
       ),
     );
   }

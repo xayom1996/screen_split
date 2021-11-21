@@ -205,7 +205,7 @@ class ChangePasswordPage extends StatelessWidget {
               )
             : Center(
                 child: Text(
-                  'Successfully password changed',
+                  'Password successfully changed',
                   textAlign: TextAlign.center,
                   style: font28.copyWith(
                       fontSize: 24.sp,
