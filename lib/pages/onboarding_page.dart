@@ -1,14 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:onboarding/onboarding.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:screen_split/controllers/password_controller.dart';
-import 'package:screen_split/pages/main_page.dart';
 import 'package:screen_split/pages/pick_password_page.dart';
 import 'package:screen_split/pages/type_password.dart';
 import 'package:screen_split/theme/text_theme.dart';
