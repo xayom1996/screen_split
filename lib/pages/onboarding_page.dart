@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:screen_split/controllers/password_controller.dart';
@@ -38,11 +39,19 @@ class OnBoardingPage extends StatelessWidget {
     ),
     ExplanationPage(
       title: 'Split Screen',
-      description: 'Subscribe to unlock all the features, just \$3.99/w',
+      description: 'Subscribe to unlock all the features, just \$3.99/week',
       localImages: ['assets/illustration_4.png'],
       isLastPage: true,
     ),
   ];
+
+  final InAppReview inAppReview = InAppReview.instance;
+
+  void rateApp() async{
+    if (await inAppReview.isAvailable()) {
+      inAppReview.requestReview();
+    }
+  }
 
   @override
   Widget build(BuildContext context){
@@ -70,6 +79,11 @@ class OnBoardingPage extends StatelessWidget {
                                       controller: _controller,
                                       onPageChanged: (value) {
                                         _currentIndex(value);
+                                        if (value == 1) {
+                                          Future.delayed(const Duration(milliseconds: 500), () {
+                                            rateApp();
+                                          });
+                                        }
                                       },
                                       children: explanationPages,
                                     )
@@ -89,6 +103,18 @@ class OnBoardingPage extends StatelessWidget {
                                         ),
                                         padding: EdgeInsets.all(16.sp),
                                         onPressed: (){
+                                          if (_currentIndex.value == 3){
+                                            PasswordController passwordController = Get.find(tag: 'password');
+                                            Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => passwordController.password.value == ''
+                                                    ? PickPasswordPage()
+                                                    : TypePasswordPage(),
+                                              ),
+                                                  (route) => false,
+                                            );
+                                          }
                                           _controller.nextPage(
                                               duration: Duration(milliseconds: 200),
                                               curve: Curves.easeInOut
@@ -194,9 +220,9 @@ class ExplanationPage extends StatelessWidget{
                       (route) => false,
                 );
               },
-              icon: FaIcon(
-                FontAwesomeIcons.times,
-                size: 18.sp,
+              icon: Icon(
+                Icons.close,
+                size: 24.sp,
                 color: Colors.white,
                 // #5B5B5B
               ),

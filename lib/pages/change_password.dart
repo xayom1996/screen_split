@@ -184,9 +184,7 @@ class ChangePasswordPage extends StatelessWidget {
                           },
                           color: Color(0xff00FF66),
                           child: Text(
-                              status.value == 'enter'
-                                  ? 'Enter password'
-                                  : 'Change password',
+                              'Change password',
                               style: font28.copyWith(
                                   fontSize: 20.sp,
                                   color: Colors.black
